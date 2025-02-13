@@ -4,7 +4,7 @@
 
 package br.org.santacasa.prontuario_api.util.mapper;
 
-import br.org.santacasa.prontuario_api.dto.PacienteDTO;
+import br.org.santacasa.prontuario_api.dto.pacienteDTO.PacienteCreateDTO;
 import br.org.santacasa.prontuario_api.models.Paciente;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +13,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class PacienteMapper {
 
-    @Autowired
-    private ModelMapper modelMapper;
 
-    public PacienteDTO toDTO(Paciente paciente) {
-        return modelMapper.map(paciente, PacienteDTO.class);
+    private final ModelMapper modelMapper;
+
+    @Autowired
+    public PacienteMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
     }
 
-    public Paciente toEntity(PacienteDTO pacienteDTO) {
-        return modelMapper.map(pacienteDTO, Paciente.class);
+    public PacienteCreateDTO toDTO(Paciente paciente) {
+        return modelMapper.map(paciente, PacienteCreateDTO.class);
+    }
+
+    public Paciente toEntity(PacienteCreateDTO pacienteCreateDTO) {
+        return modelMapper.map(pacienteCreateDTO, Paciente.class);
     }
 }

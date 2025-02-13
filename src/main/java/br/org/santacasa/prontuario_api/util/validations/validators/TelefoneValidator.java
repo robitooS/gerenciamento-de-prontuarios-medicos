@@ -4,20 +4,18 @@
 
 package br.org.santacasa.prontuario_api.util.validations.validators;
 
-import br.org.santacasa.prontuario_api.dto.PacienteDTO;
 import br.org.santacasa.prontuario_api.exceptions.custom.ValidationException;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
 
 @Component
-public class TelefoneValidator implements Validator<PacienteDTO> {
+public class TelefoneValidator implements Validator<String> {
 
     private static final Pattern TELEFONE_PATTERN = Pattern.compile("^\\(\\d{2}\\)\\d{5}-\\d{4}$");
 
     @Override
-    public void validate(PacienteDTO object) {
-        String telefone = object.getTelefone();
+    public void validate(String telefone) {
         if (telefone == null || telefone.trim().isEmpty()) {
             throw new ValidationException("O telefone não pode estar em branco.", "TELEFONE_VAZIO");
         }
@@ -28,6 +26,6 @@ public class TelefoneValidator implements Validator<PacienteDTO> {
     }
 
     private String sanitizeTelefone(String telefone) {
-        return telefone.replaceAll("[^0-9]", "").replaceFirst("(\\d{2})(\\d{4,5})(\\d{4})", "($1)$2-$3");
+        return telefone.replaceAll("[^0-9]", "").replaceFirst("(\\d{2})(\\d{5})(\\d{4})", "($1)$2-$3");
     }
 }

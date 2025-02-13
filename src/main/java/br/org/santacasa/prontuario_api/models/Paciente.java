@@ -55,7 +55,7 @@ public class Paciente {
     @Email(message = "O email deve ser válido.")
     @NotBlank(message = "O email é obrigatório.")
     @Size(max = 150, message = "O email não pode ultrapassar 150 caracteres.")
-    @Column(name = "email", nullable = false, unique = true, length = 100) // Define a coluna email como única
+    @Column(name = "email", nullable = false, length = 100) // Define a coluna email como única
     private String email;
 
     @NotBlank(message = "O telefone é obrigatório.")

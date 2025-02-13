@@ -1,32 +1,39 @@
 package br.org.santacasa.prontuario_api.util.validations;
 
-import br.org.santacasa.prontuario_api.dto.PacienteDTO;
-import br.org.santacasa.prontuario_api.util.validations.validators.Validator;
+import br.org.santacasa.prontuario_api.dto.pacienteDTO.PacienteCreateDTO;
+import br.org.santacasa.prontuario_api.util.validations.validators.CpfValidator;
+import br.org.santacasa.prontuario_api.util.validations.validators.NomeValidator;
+import br.org.santacasa.prontuario_api.util.validations.validators.TelefoneValidator;
 import br.org.santacasa.prontuario_api.repository.PacienteRepository;
 import br.org.santacasa.prontuario_api.exceptions.custom.ValidationException;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 
 @Component
 public class PacienteValidator {
 
-    private final List<Validator<PacienteDTO>> validators;
     private final PacienteRepository pacienteRepository;
+    private final CpfValidator cpfValidator;
+    private final NomeValidator nomeValidator;
+    private final TelefoneValidator telefoneValidator;
 
-    public PacienteValidator(@Qualifier("pacienteValidators") List<Validator<PacienteDTO>> validators,
-                             PacienteRepository pacienteRepository) {
-        this.validators = validators;
+    public PacienteValidator(PacienteRepository pacienteRepository,
+                             CpfValidator cpfValidator,
+                             NomeValidator nomeValidator,
+                             TelefoneValidator telefoneValidator) {
         this.pacienteRepository = pacienteRepository;
+        this.cpfValidator = cpfValidator;
+        this.nomeValidator = nomeValidator;
+        this.telefoneValidator = telefoneValidator;
     }
 
-    public void validate(PacienteDTO pacienteDTO) {
-        // Chama todos os validadores injetados dinamicamente pelo Spring
-        validators.forEach(validator -> validator.validate(pacienteDTO));
+    public void validate(PacienteCreateDTO pacienteCreateDTO) {
+        nomeValidator.validate(pacienteCreateDTO.getNome());
+        cpfValidator.validate(pacienteCreateDTO.getCpf());
+        telefoneValidator.validate(pacienteCreateDTO.getTelefone());
 
         // Validação adicional para verificar a unicidade do email
-        validateEmailUniqueness(pacienteDTO.getEmail());
+        validateEmailUniqueness(pacienteCreateDTO.getEmail());
     }
 
     private void validateEmailUniqueness(String email) {

@@ -4,7 +4,7 @@
 
 package br.org.santacasa.prontuario_api.service.usuario;
 
-import br.org.santacasa.prontuario_api.dto.UsuarioDTO;
+import br.org.santacasa.prontuario_api.dto.usuarioDTO.UsuarioDTO;
 import br.org.santacasa.prontuario_api.exceptions.custom.ResourceNotFoundException;
 import br.org.santacasa.prontuario_api.models.Usuario;
 import br.org.santacasa.prontuario_api.repository.UsuarioRepository;

@@ -4,7 +4,7 @@
 
 package br.org.santacasa.prontuario_api.controllers;
 
-import br.org.santacasa.prontuario_api.dto.PacienteDTO;
+import br.org.santacasa.prontuario_api.dto.pacienteDTO.PacienteCreateDTO;
 import br.org.santacasa.prontuario_api.exceptions.custom.ResourceNotFoundException;
 import br.org.santacasa.prontuario_api.service.paciente.PacienteService;
 import jakarta.validation.Valid;
@@ -27,45 +27,45 @@ public class PacienteController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<PacienteDTO>> listarPacientes(@RequestParam(defaultValue = "0") int page,
-                                                             @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<Page<PacienteCreateDTO>> listarPacientes(@RequestParam(defaultValue = "0") int page,
+                                                                   @RequestParam(defaultValue = "10") int size) {
         return new ResponseEntity<>(pacienteService.listarTodos(PageRequest.of(page, size)), HttpStatus.OK);
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<PacienteDTO> criarPaciente(@Valid @RequestBody PacienteDTO pacienteDTO) {
-        PacienteDTO novoPaciente = pacienteService.criarPaciente(pacienteDTO);
+    public ResponseEntity<PacienteCreateDTO> criarPaciente(@Valid @RequestBody PacienteCreateDTO pacienteCreateDTO) {
+        PacienteCreateDTO novoPaciente = pacienteService.criarPaciente(pacienteCreateDTO);
 
         return new ResponseEntity<>(novoPaciente, HttpStatus.CREATED);
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<PacienteDTO> getPacienteById(@PathVariable Long id) throws ResourceNotFoundException {
-        PacienteDTO paciente = pacienteService.getPacienteById(id);
+    public ResponseEntity<PacienteCreateDTO> getPacienteById(@PathVariable Long id) throws ResourceNotFoundException {
+        PacienteCreateDTO paciente = pacienteService.getPacienteById(id);
 
         return ResponseEntity.ok(paciente);
     }
 
     @GetMapping("/nome/{nome}")
-    public ResponseEntity<Page<PacienteDTO>> getPacienteByNome(
+    public ResponseEntity<Page<PacienteCreateDTO>> getPacienteByNome(
             @PathVariable String nome,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        Page<PacienteDTO> pacientes = pacienteService.getPacienteByNome(nome, PageRequest.of(page, size));
+        Page<PacienteCreateDTO> pacientes = pacienteService.getPacienteByNome(nome, PageRequest.of(page, size));
         return ResponseEntity.ok(pacientes);
     }
 
     @GetMapping("/cpf/{cpf}")
-    public ResponseEntity<PacienteDTO> getPacienteByCpf(@PathVariable String cpf) throws ResourceNotFoundException {
-        PacienteDTO paciente = pacienteService.getPacienteByCpf(cpf);
+    public ResponseEntity<PacienteCreateDTO> getPacienteByCpf(@PathVariable String cpf) throws ResourceNotFoundException {
+        PacienteCreateDTO paciente = pacienteService.getPacienteByCpf(cpf);
 
         return ResponseEntity.ok(paciente);
     }
 
 //    @PutMapping("/{id}")
-//    public ResponseEntity<PacienteDTO> atualizarPaciente(@PathVariable Long id, @Valid @RequestBody PacienteDTO pacienteDTO) throws ResourceNotFoundException {
-//        PacienteDTO pacienteAlterado = pacienteService.alterar(id, pacienteDTO);
+//    public ResponseEntity<PacienteCreateDTO> atualizarPaciente(@PathVariable Long id, @Valid @RequestBody PacienteCreateDTO pacienteDTO) throws ResourceNotFoundException {
+//        PacienteCreateDTO pacienteAlterado = pacienteService.alterar(id, pacienteDTO);
 //
 //        return ResponseEntity.ok(pacienteAlterado);
 //    }

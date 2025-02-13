@@ -1,6 +1,5 @@
 package br.org.santacasa.prontuario_api.util.validations.validators;
 
-import br.org.santacasa.prontuario_api.dto.PacienteDTO;
 import br.org.santacasa.prontuario_api.exceptions.custom.ValidationException;
 import br.org.santacasa.prontuario_api.repository.PacienteRepository;
 import org.springframework.stereotype.Component;
@@ -23,11 +22,14 @@ public class CpfValidator implements Validator<String> {
         if (cpf == null || cpf.trim().isEmpty()) {
             throw new ValidationException("O CPF não pode estar em branco.", "CPF_VAZIO");
         }
+        if (!CPF_PATTERN.matcher(cpf).matches()) {
+            throw new ValidationException("O CPF deve estar no formato 000.000.000-00.", "CPF_INVALIDO");
+        }
         if (!isValidCpf(cpf)) {
-            throw new ValidationException("O CPF dado é inválido.", "CPF_INVALIDO");
+            throw new ValidationException("O CPF dado é inválido.", "CPF_INEXISTENTE");
         }
         if (pacienteRepository.existsByCpf(cpf)) {
-
+            throw new ValidationException("O CPF já está cadastrado.", "CPF_DUPLICADO");
         }
     }
 

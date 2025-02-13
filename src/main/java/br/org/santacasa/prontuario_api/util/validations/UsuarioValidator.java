@@ -4,36 +4,37 @@
 
 package br.org.santacasa.prontuario_api.util.validations;
 
-import br.org.santacasa.prontuario_api.dto.UsuarioDTO;
+import br.org.santacasa.prontuario_api.dto.usuarioDTO.UsuarioDTO;
 import br.org.santacasa.prontuario_api.exceptions.custom.ValidationException;
 import br.org.santacasa.prontuario_api.repository.UsuarioRepository;
-import br.org.santacasa.prontuario_api.util.validations.validators.SenhaValidator;
-import br.org.santacasa.prontuario_api.util.validations.validators.Validator;
+import br.org.santacasa.prontuario_api.util.validations.validators.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.regex.Pattern;
 
 @Component
 public class UsuarioValidator {
 
     private final UsuarioRepository usuarioRepository;
-    private final List<Validator<UsuarioDTO>> validatorList;
+    private final CpfValidator cpfValidator;
+    private final NomeValidator nomeValidator;
     private final SenhaValidator senhaValidator;
 
     @Autowired
-    public UsuarioValidator(@Qualifier("senhaValidator") SenhaValidator senhaValidator,
-                            List<Validator<UsuarioDTO>> validatorList,
-                            UsuarioRepository usuarioRepository) {
-        this.validatorList = validatorList;
+    public UsuarioValidator(SenhaValidator senhaValidator,
+                            UsuarioRepository usuarioRepository,
+                            CpfValidator cpfValidator,
+                            NomeValidator nomeValidator){
+        this.cpfValidator = cpfValidator;
+        this.nomeValidator = nomeValidator;
         this.usuarioRepository = usuarioRepository;
         this.senhaValidator = senhaValidator;
     }
 
     public void validate(UsuarioDTO usuarioDTO) {
-        validatorList.forEach(validator -> validator.validate(usuarioDTO));
+        nomeValidator.validate(usuarioDTO.getNome());
+        senhaValidator.validate(usuarioDTO.getSenha());
+
+        validateEmailUniqueness(usuarioDTO.getEmail());
     }
 
     private void validateEmailUniqueness(String email) {

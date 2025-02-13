@@ -1,6 +1,7 @@
 package br.org.santacasa.prontuario_api.service.paciente;
 
-import br.org.santacasa.prontuario_api.dto.PacienteDTO;
+import br.org.santacasa.prontuario_api.dto.enderecoDTO.EnderecoDTO;
+import br.org.santacasa.prontuario_api.dto.pacienteDTO.PacienteCreateDTO;
 import br.org.santacasa.prontuario_api.exceptions.custom.ResourceNotFoundException;
 import br.org.santacasa.prontuario_api.models.Endereco;
 import br.org.santacasa.prontuario_api.models.Paciente;
@@ -39,13 +40,13 @@ public class PacienteService {
     }
 
     @Transactional
-    public PacienteDTO criarPaciente(PacienteDTO pacienteDTO) {
-        pacienteValidator.validate(pacienteDTO);
+    public PacienteCreateDTO criarPaciente(PacienteCreateDTO pacienteCreateDTO) {
+        pacienteValidator.validate(pacienteCreateDTO);
 
         try {
             // Converte DTO para entidade e salva o endereço antes de associar ao paciente
-            Paciente paciente = pacienteMapper.toEntity(pacienteDTO);
-            Endereco enderecoSalvo = enderecoService.salvarEndereco(pacienteDTO.getEndereco());
+            Paciente paciente = pacienteMapper.toEntity(pacienteCreateDTO);
+            Endereco enderecoSalvo = enderecoService.salvarEndereco(pacienteCreateDTO.getEndereco());
             paciente.setEndereco(enderecoSalvo);
 
             // Salva o paciente no banco
@@ -61,21 +62,21 @@ public class PacienteService {
     }
 
     @Transactional(readOnly = true)
-    public PacienteDTO getPacienteById(Long id) {
+    public PacienteCreateDTO getPacienteById(Long id) {
         Paciente paciente = pacienteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado!", id, "Paciente"));
         return pacienteMapper.toDTO(paciente);
     }
 
     @Transactional(readOnly = true)
-    public PacienteDTO getPacienteByCpf(String cpf) {
+    public PacienteCreateDTO getPacienteByCpf(String cpf) {
         Paciente paciente = pacienteRepository.findByCpf(cpf)
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com CPF: " + cpf, null, "Paciente"));
         return pacienteMapper.toDTO(paciente);
     }
 
     @Transactional(readOnly = true)
-    public Page<PacienteDTO> getPacienteByNome(String nome, Pageable pageRequest) {
+    public Page<PacienteCreateDTO> getPacienteByNome(String nome, Pageable pageRequest) {
         Page<Paciente> pacientes = pacienteRepository.findByNome(nome, pageRequest);
 
         if (pacientes.isEmpty()) {
@@ -85,7 +86,7 @@ public class PacienteService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PacienteDTO> listarTodos(PageRequest pageRequest) {
+    public Page<PacienteCreateDTO> listarTodos(PageRequest pageRequest) {
         return pacienteRepository.findAll(pageRequest)
                 .map(pacienteMapper::toDTO);
     }

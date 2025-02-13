@@ -2,7 +2,7 @@
  * @author higor.robinn on 20/01/2025.
  */
 
-package br.org.santacasa.prontuario_api.dto;
+package br.org.santacasa.prontuario_api.dto.enderecoDTO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

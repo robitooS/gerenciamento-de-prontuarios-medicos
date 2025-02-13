@@ -2,8 +2,9 @@
  * @author higor.robinn on 20/01/2025.
  */
 
-package br.org.santacasa.prontuario_api.dto;
+package br.org.santacasa.prontuario_api.dto.pacienteDTO;
 
+import br.org.santacasa.prontuario_api.dto.enderecoDTO.EnderecoDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +20,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PacienteDTO {
+public class PacienteCreateDTO {
 
     @NotBlank(message = "Nome obrigatório")
     private String nome;

@@ -2,7 +2,7 @@
  * @author higor.robinn on 20/01/2025.
  */
 
-package br.org.santacasa.prontuario_api.dto;
+package br.org.santacasa.prontuario_api.dto.prontuarioDTO;
 
 
 import jakarta.validation.constraints.NotBlank;
@@ -10,8 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
