@@ -69,7 +69,7 @@ public class PacienteService {
     }
 
     @Transactional(readOnly = true)
-    public PacienteCreateDTO getPacienteByCpf(String cpf) {
+    public PacienteResponseDTO getPacienteByCpf(String cpf) {
         Paciente paciente = pacienteRepository.findByCpf(cpf)
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com CPF: " + cpf, null, "Paciente"));
         return pacienteMapper.toDTO(paciente);
