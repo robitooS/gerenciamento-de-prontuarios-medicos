@@ -76,7 +76,7 @@ public class PacienteService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PacienteCreateDTO> getPacienteByNome(String nome, Pageable pageRequest) {
+    public Page<PacienteResponseDTO> getPacienteByNome(String nome, Pageable pageRequest) {
         Page<Paciente> pacientes = pacienteRepository.findByNome(nome, pageRequest);
 
         if (pacientes.isEmpty()) {
