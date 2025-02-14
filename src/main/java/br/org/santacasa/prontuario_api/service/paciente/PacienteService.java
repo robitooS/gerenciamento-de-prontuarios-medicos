@@ -62,7 +62,7 @@ public class PacienteService {
     }
 
     @Transactional(readOnly = true)
-    public PacienteCreateDTO getPacienteById(Long id) {
+    public PacienteResponseDTO getPacienteById(Long id) {
         Paciente paciente = pacienteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado!", id, "Paciente"));
         return pacienteMapper.toDTO(paciente);
