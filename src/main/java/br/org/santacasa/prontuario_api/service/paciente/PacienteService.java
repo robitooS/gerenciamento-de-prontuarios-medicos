@@ -40,7 +40,7 @@ public class PacienteService {
     }
 
     @Transactional
-    public PacienteCreateDTO criarPaciente(PacienteCreateDTO pacienteCreateDTO) {
+    public PacienteResponseDTO criarPaciente(PacienteCreateDTO pacienteCreateDTO) {
         pacienteValidator.validate(pacienteCreateDTO);
 
         try {
