@@ -86,7 +86,7 @@ public class PacienteService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PacienteCreateDTO> listarTodos(PageRequest pageRequest) {
+    public Page<PacienteResponseDTO> listarTodos(PageRequest pageRequest) {
         return pacienteRepository.findAll(pageRequest)
                 .map(pacienteMapper::toDTO);
     }
