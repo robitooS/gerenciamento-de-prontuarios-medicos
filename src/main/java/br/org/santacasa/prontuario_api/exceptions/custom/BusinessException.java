@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * Exceção genérica para erros de regras de negócio.
  */
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 @Getter
 public class BusinessException extends RuntimeException {
     private final String errorCode;
