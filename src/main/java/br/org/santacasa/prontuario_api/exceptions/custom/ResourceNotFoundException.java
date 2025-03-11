@@ -15,14 +15,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 @Getter
 public class ResourceNotFoundException extends RuntimeException {
-    private final Long resourceId;
-    private final String resourceType;
+    private final String field;
     private final String errorCode;
 
-    public ResourceNotFoundException(String resourceType, Long resourceId, String errorCode) {
-        super(resourceType + " não encontrado(a) com ID: " + resourceId);
-        this.resourceType = resourceType;
-        this.resourceId = resourceId;
+    public ResourceNotFoundException(String message) {
+        super(message);
+        this.field = null;
+        this.errorCode = null;
+    }
+
+    public ResourceNotFoundException(String message, String field, String errorCode) {
+        super(String.format("%s Campo: %s, Código: %s", message, field, errorCode));
+        this.field = field;
         this.errorCode = errorCode;
     }
 }
