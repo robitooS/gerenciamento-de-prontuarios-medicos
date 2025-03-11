@@ -24,9 +24,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private UserDetailsServiceImpl userDetailsService;
-    private JwtAuthFilter jwtAuthFilter;         // Filtro JWT customizado
-    private AuthEntryPointJwt unauthorizedHandler; // Handler p/ 401
+    private final UserDetailsServiceImpl userDetailsService;
+    private final JwtAuthFilter jwtAuthFilter;         // Filtro JWT customizado
+    private final AuthEntryPointJwt unauthorizedHandler; // Handler p/ 401
 
     @Autowired
     public SecurityConfig(UserDetailsServiceImpl userDetailsService, JwtAuthFilter jwtAuthFilter, AuthEntryPointJwt unauthorizedHandler) {
